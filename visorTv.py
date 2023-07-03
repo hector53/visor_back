@@ -147,7 +147,7 @@ class TVSocket(Thread):
                 await asyncio.sleep(5)
 
 async def main():
-    client = TVSocket("localhost", 5353)
+    client = TVSocket("143.198.171.163", 5353)
     pairs = ["CBOT:ZS","CBOT:ZC","CBOT:ZW", "MATBAROFEX:SOJ.ROS","MATBAROFEX:MAI.ROS","MATBAROFEX:TRI.ROS", "BINANCE:BTCUSDT", "SP:SPX", "NASDAQ:NDX", "BINANCE:ETHUSDT", "NYMEX:CL1!", "COMEX:GC1!"]
     try:
         await client.run_client_socket(pairs)
