@@ -36,8 +36,8 @@ class SocketServer(threading.Thread):
 
     async def broadcast(self, message):
         # Envía el mensaje a todos los clientes conectados
-        if self.clients:
-            await asyncio.wait([client.send(message) for client in self.clients])
+        for client in self.clients:
+            client.send(message)
 
     async def run_server(self):
         # Crea el contexto SSL
