@@ -2,7 +2,6 @@ from websocket_server import WebsocketServer
 from threading import Thread
 import logging
 import json
-import ssl
 class socketServer(Thread):
     def __init__(self, host, port):
         Thread.__init__(self)

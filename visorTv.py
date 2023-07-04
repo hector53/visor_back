@@ -2,7 +2,7 @@ import asyncio
 import websocket
 from threading import Thread
 import logging
-from socketServer2 import SocketServer
+from socketServer import socketServer
 import json
 import ssl
 import string
@@ -10,16 +10,14 @@ import requests
 import random
 from websocket import create_connection
 from websocket._exceptions import WebSocketConnectionClosedException
-import pathlib
+
 class TVSocket(Thread):
     def __init__(self, host, port):
         Thread.__init__(self)
         self.host = host
         self.port = port
-        self.ssl_cert = pathlib.Path("server.crt")
-        self.ssl_key = pathlib.Path("server.key")
         self.log = logging.getLogger("SockerSidebar")
-        self.server = SocketServer(host=self.host, port=self.port, ssl_cert=self.ssl_cert, ssl_key=self.ssl_key)
+        self.server = socketServer(host, port)
         self.server.start()
     
     def generateSession(self):
@@ -149,7 +147,7 @@ class TVSocket(Thread):
                 await asyncio.sleep(5)
 
 async def main():
-    client = TVSocket("localhost", 5353)
+    client = TVSocket("0.0.0.0", 5353)
     pairs = ["CBOT:ZS","CBOT:ZC","CBOT:ZW", "MATBAROFEX:SOJ.ROS","MATBAROFEX:MAI.ROS","MATBAROFEX:TRI.ROS", "BINANCE:BTCUSDT", "SP:SPX", "NASDAQ:NDX", "BINANCE:ETHUSDT", "NYMEX:CL1!", "COMEX:GC1!"]
     try:
         await client.run_client_socket(pairs)
