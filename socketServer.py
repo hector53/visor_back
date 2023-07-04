@@ -16,14 +16,10 @@ class socketServer(Thread):
         self.server.shutdown_abruptly()
         
     def run(self):
-        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain(certfile="server.crt", keyfile="server.key")
-
-        self.server.socket = ssl_context.wrap_socket(self.server.socket, server_side=True)
-        self.server.set_fn_new_client(self.handleConnected)
-        self.server.set_fn_client_left(self.handleClose)   
-        self.server.set_fn_message_received(self.handleMessage)   
-        self.server.run_forever()
+            self.server.set_fn_new_client(self.handleConnected)
+            self.server.set_fn_client_left(self.handleClose)   
+            self.server.set_fn_message_received(self.handleMessage)   
+            self.server.run_forever()
     
     def handleInterrupt(self, signal, frame):
       #  self.log.info("Señal SIGINT recibida. Deteniendo servidor de WebSocket...")
