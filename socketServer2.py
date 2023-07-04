@@ -34,7 +34,7 @@ class SocketServer(threading.Thread):
         # Envía el mensaje a todos los clientes conectados
         await self.broadcast(message)
 
-    async def broadcast(self, message):
+    def broadcast(self, message):
         # Envía el mensaje a todos los clientes conectados
         for client in self.clients:
             client.send(message)
