@@ -2,7 +2,7 @@ import asyncio
 import websocket
 from threading import Thread
 import logging
-from socketServer import socketServer
+from socketServer2 import SocketServer
 import json
 import ssl
 import string
@@ -10,14 +10,16 @@ import requests
 import random
 from websocket import create_connection
 from websocket._exceptions import WebSocketConnectionClosedException
-
+import pathlib
 class TVSocket(Thread):
     def __init__(self, host, port):
         Thread.__init__(self)
         self.host = host
         self.port = port
+        self.ssl_cert = pathlib.Path("server.crt")
+        self.ssl_key = pathlib.Path("server.key")
         self.log = logging.getLogger("SockerSidebar")
-        self.server = socketServer(host, port)
+        self.server = SocketServer(host="0.0.0.0", port=5353, ssl_cert=self.ssl_cert, ssl_key=self.ssl_key)
         self.server.start()
     
     def generateSession(self):
