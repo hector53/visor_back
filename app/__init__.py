@@ -10,8 +10,8 @@ import time
 import asyncio
 
 
-logging.basicConfig(filename=f'reports.log', level=logging.INFO,
-                    format='%(asctime)s %(name)s  %(levelname)s  %(message)s  %(lineno)d ')
+#logging.basicConfig(filename=f'reports.log', level=logging.INFO,
+ #                   format='%(asctime)s %(name)s  %(levelname)s  %(message)s  %(lineno)d ')
 log = logging.getLogger(__name__)
    
 app = Flask(__name__)
