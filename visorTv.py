@@ -19,7 +19,7 @@ class TVSocket(Thread):
         self.ssl_cert = pathlib.Path("server.crt")
         self.ssl_key = pathlib.Path("server.key")
         self.log = logging.getLogger("SockerSidebar")
-        self.server = SocketServer(host="0.0.0.0", port=5353, ssl_cert=self.ssl_cert, ssl_key=self.ssl_key)
+        self.server = SocketServer(host=self.host, port=self.port, ssl_cert=self.ssl_cert, ssl_key=self.ssl_key)
         self.server.start()
     
     def generateSession(self):
@@ -149,7 +149,7 @@ class TVSocket(Thread):
                 await asyncio.sleep(5)
 
 async def main():
-    client = TVSocket("0.0.0.0", 5353)
+    client = TVSocket("localhost", 5353)
     pairs = ["CBOT:ZS","CBOT:ZC","CBOT:ZW", "MATBAROFEX:SOJ.ROS","MATBAROFEX:MAI.ROS","MATBAROFEX:TRI.ROS", "BINANCE:BTCUSDT", "SP:SPX", "NASDAQ:NDX", "BINANCE:ETHUSDT", "NYMEX:CL1!", "COMEX:GC1!"]
     try:
         await client.run_client_socket(pairs)
