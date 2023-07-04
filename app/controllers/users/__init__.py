@@ -1,6 +1,6 @@
 from app import jsonify, request, abort, make_response
 from app import  jwt_required,get_jwt_identity, unset_jwt_cookies, create_access_token
-from app import  logging
+from app import  logging, mongo
 from app.modulos_db import getDataOne
 import asyncio
 log = logging.getLogger(__name__)
@@ -45,18 +45,13 @@ class UserController:
         try: 
             username = body["username"]
             password = body["password"]
-            sql = f"SELECT * FROM users where username =  %s and password =%s "
-            tupla = (username, password)
-            user = getDataOne(sql, tupla)
+            user = mongo.db.users.find_one({'username': username, 'password': password})
+            user["_id"] = str(user["_id"])
             if user:
                 print("user", user)
-                userData = {
-                    "id": user[0],
-                    "username":user[1]
-                }
             # El usuario existe
                 print('El usuario existe')  
-                access_token = create_access_token(identity=userData)
+                access_token = create_access_token(identity=user)
                 response = {
                     'status': True,
                     'message': 'Login successful',
