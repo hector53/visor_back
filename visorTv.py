@@ -148,6 +148,7 @@ class TVSocket(Thread):
 
 async def main():
     client = TVSocket("0.0.0.0", 5353)
+    #cambios
     pairs = ["CBOT:ZS","CBOT:ZC","CBOT:ZW", "MATBAROFEX:SOJ.ROS","MATBAROFEX:MAI.ROS","MATBAROFEX:TRI.ROS", "BINANCE:BTCUSDT", "SP:SPX", "NASDAQ:NDX", "BINANCE:ETHUSDT", "NYMEX:CL1!", "COMEX:GC1!"]
     try:
         await client.run_client_socket(pairs)
