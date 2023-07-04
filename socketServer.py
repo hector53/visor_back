@@ -8,7 +8,7 @@ class socketServer(Thread):
         self.host = host
         self.port = port
         self.log = logging.getLogger("SockerSidebar")
-        self.server = WebsocketServer(self.host, self.port, logging.INFO) 
+        self.server = WebsocketServer(self.host, self.port,  logging.INFO, key="/srv/visor_back/server.key", cert="/srv/visor_back/server.crt") 
         self.clients = []
         
     def close(self):
