@@ -3,6 +3,7 @@ from app import  jwt_required,get_jwt_identity, unset_jwt_cookies, create_access
 from app import  logging, mongo
 from app.modulos_db import getDataOne
 import asyncio
+import requests
 log = logging.getLogger(__name__)
 class UserController:
     @staticmethod
@@ -26,6 +27,30 @@ class UserController:
         response = jsonify({'message': 'Logout exitoso', 'status': "success"})
         unset_jwt_cookies(response)
         return response, 200
+    
+    async def get_news_request():
+        symbols_news = ['CBOT:ZS1!', 'CME:ES1!', 'NYMEX:CL1!']
+
+        news = []
+
+        headers = {
+        'Origin': 'https://www.tradingview.com', "Accept-Encoding": "gzip, deflate, br", 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        }
+
+        for symbol in symbols_news:
+            url = f'https://news-headlines.tradingview.com/headlines/?category=futures&lang=en&symbol={symbol}'
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                filtered_news = [item for item in response.json() if any(
+                s in symbols_news for s in [s['symbol'] for s in item.get('relatedSymbols', [])])]
+                news += filtered_news
+
+        
+        return news
+    
+    async def get_news():
+        news = await UserController.get_news_request(); 
+        return jsonify(news)
     
     async def historico_visor():
         from app.clases.cla_historicotv import HistoricoTV
