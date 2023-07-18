@@ -16,13 +16,5 @@ for symbol in symbols_news:
             s in symbols_news for s in [s['symbol'] for s in item.get('relatedSymbols', [])])]
         news += filtered_news
 
-# Eliminamos las noticias duplicadas
-unique_news = []
-for item in news:
-    if item not in unique_news:
-        unique_news.append(item)
 
-# Ordenamos las noticias por timestamp en orden descendente (noticias más recientes primero)
-unique_news.sort(key=lambda x: x['published'], reverse=True)
-
-print("news", len(unique_news))
+print("news", len(news))

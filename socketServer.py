@@ -2,24 +2,24 @@ from websocket_server import WebsocketServer
 from threading import Thread
 import logging
 import json
-import ssl
 class socketServer(Thread):
-    def __init__(self, host, port):
+    def __init__(self, host, port, client):
         Thread.__init__(self)
         self.host = host
         self.port = port
         self.log = logging.getLogger("SockerSidebar")
-        self.server = WebsocketServer(self.host, self.port,loglevel=logging.INFO) 
+        self.server = WebsocketServer(self.host, self.port, logging.INFO) 
+        self.clientTv = client
         self.clients = []
         
     def close(self):
         self.server.shutdown_abruptly()
         
     def run(self):
-            self.server.set_fn_new_client(self.handleConnected)
-            self.server.set_fn_client_left(self.handleClose)   
-            self.server.set_fn_message_received(self.handleMessage)   
-            self.server.run_forever()
+        self.server.set_fn_new_client(self.handleConnected)
+        self.server.set_fn_client_left(self.handleClose)   
+        self.server.set_fn_message_received(self.handleMessage)   
+        self.server.run_forever()
     
     def handleInterrupt(self, signal, frame):
       #  self.log.info("Señal SIGINT recibida. Deteniendo servidor de WebSocket...")
@@ -37,14 +37,13 @@ class socketServer(Thread):
         self.clients.append(client) 
 
     def process_message(self, task):
-        self.log.info(f"procesando mensaje de cliente .....: {task}")
-#            self.broadcast(str(ordenes))
+        print(f"procesando mensaje de cliente .....: {task}")
+        self.clientTv.update_pairs(task)
 
-        
     def handleMessage(self, client, server, message):
         print("cliente envio mensaje: ", message)
-        encode_json = json.loads(str(message).replace("'", '"'))
-        self.process_message(encode_json)
+      #  encode_json = json.loads(message)
+        self.process_message(message)
        # self.message_queue.put_nowait(encode_json)
         pass
     
