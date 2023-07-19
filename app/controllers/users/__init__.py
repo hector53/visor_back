@@ -63,9 +63,13 @@ class UserController:
         body = request.get_json()
         print(body)
         try: 
-            username = body["username"]
-            password = body["password"]
-            user = mongo.db.users.find_one({'username': username, 'password': password})
+            username = str(body["username"])
+            password = str(body["password"])
+            print("username", username)
+            print("password", password)
+            user = mongo.db.users.find_one_or_404({'username': username, 'password': password})
+            print("voy por aqui en el login")
+            print("user", user)
             user["_id"] = str(user["_id"])
             if user:
                 print("user", user)
