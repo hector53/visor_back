@@ -6,14 +6,22 @@ import requests
 from websocket import create_connection
 import logging
 import asyncio
-
-class HistoricoTV():
-    def __init__(self):
-        self.log = logging.getLogger("socketHistorico")
+from threading import Thread
+import time
+from app.clases.webSocketServer import WebSocketServer
+class clienteTV(Thread):
+    def __init__(self, client_id, server:WebSocketServer):
+        Thread.__init__(self)
+        self.client_id = client_id
+        self.log = logging.getLogger(f"clientTV_{client_id}")
         self.prices = {}
         self.changing_pairs = False
         self.threadSymbols = None
         self.dataSuscrita = []
+        self.pairs = []
+        self.suscripcionCompleta = False
+        self.server = server
+        self.closeThread = False
 
     def search(self, exchange, symbol):
         res = requests.get(
@@ -94,15 +102,15 @@ class HistoricoTV():
        # print(f"Symbols: {symbols}")  # Print the symbols
         return symbols
     
-    async def suscribir_data(self,ws, pairs):
-        print("suscribir_data", pairs)
+    def suscribir_data(self,ws):
+        print("suscribir_data", self.pairs)
         auth_token = "eyJhbGciOiJSUzUxMiIsImtpZCI6IkdaeFUiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjo0MjA3Mjc0MCwiZXhwIjoxNjg5OTY3Mzc4LCJpYXQiOjE2ODk5NTI5NzgsInBsYW4iOiJwcm9fdHJpYWwiLCJleHRfaG91cnMiOjEsInBlcm0iOiJjYm90LGNib3RfbWluaSxjbWUsY21lLWZ1bGwsY21lX21pbmksY29tZXgsY29tZXhfbWluaSxueW1leCxueW1leF9taW5pIiwic3R1ZHlfcGVybSI6InR2LXZvbHVtZWJ5cHJpY2UsdHYtY2hhcnRwYXR0ZXJucyIsIm1heF9zdHVkaWVzIjo1LCJtYXhfZnVuZGFtZW50YWxzIjowLCJtYXhfY2hhcnRzIjoyLCJtYXhfYWN0aXZlX2FsZXJ0cyI6MjAsIm1heF9zdHVkeV9vbl9zdHVkeSI6MSwibWF4X2FjdGl2ZV9wcmltaXRpdmVfYWxlcnRzIjoyMCwibWF4X2FjdGl2ZV9jb21wbGV4X2FsZXJ0cyI6MjAsIm1heF9jb25uZWN0aW9ucyI6MTB9.lethKqmukZTrnoTr6dx6UmIkdPFHs3XTAqAZomFTmma7IcSSBLldvCsIxANk3AnTRUuHecCX-KlxDOEpm9qcZ3XMjuenVyr7CL03OQv5zbI04_0pMCkmQwGmZLxdPTRBPpEKf3ZmRt_0TsUJwGB3dOFZxXomoXbfhXxzPBZdbvI"
         self.sendMessage(ws, "set_auth_token", [auth_token])
         session = self.generateSession()
         self.sendMessage(ws, "quote_create_session", [session])
-        self.sendMessage(ws, "quote_set_fields", [session, 'base-currency-logoid', 'ch', 'chp', 'currency-logoid', 'currency_code', 'current_session', 'description', 'exchange', 'format', 'fractional', 'is_tradable', 'language', 'local_description', 'logoid', 'lp', 'lp_time', 'minmov', 'minmove2', 'original_name', 'pricescale', 'pro_name', 'short_name', 'type', 'update_mode', 'volume', 'ask', 'bid', 'fundamentals', 'high_price', 'low_price', 'open_price', 'prev_close_price', 'rch', 'rchp', 'rtc', 'rtc_time', 'status', 'industry', 'basic_eps_net_income', 'beta_1_year', 'market_cap_basic', 'earnings_per_share_basic_ttm', 'price_earnings_ttm', 'sector', 'dividends_yield', 'timezone', 'country_code', 'provider_id']) 
+        self.sendMessage(ws, "quote_set_fields", [session,  'ch', 'chp',  'exchange',  'lp',    'original_name',  'volume', 'ask', 'bid']) 
         # For each pair, get all the symbols (including contracts) and add them to the session
-        for i, pair in enumerate(pairs):
+        for i, pair in enumerate(self.pairs):
            # print("pair", pair)
             # Split the pair into exchange and symbol
             exchange, symbol = pair.split(':')
@@ -112,30 +120,45 @@ class HistoricoTV():
             symbol_ids = self.getSymbolId(data)
             # Add all the symbols to the session
             for symbol_id in symbol_ids:
-                print("symbol_id", symbol_id)
+              #  print("symbol_id", symbol_id)
                 self.sendMessage(ws, "quote_add_symbols", [session, symbol_id])
-                self.dataSuscrita.append(symbol_id)
-                self.prices[symbol_id] = {
-                                        "ask": 0,
-                                        "bid": 0,
-                                        "ch": 0,
-                                        "chp": 0,
-                                        "lp": 0,
-                                        "volume": 0
-                                         }
+                if self.suscripcionCompleta==False:
+                    self.dataSuscrita.append(symbol_id)
+                  
         print("saliendo de suscribir data")
     
-    def borrar_symbol_suscrito(self, symbol):
-        print("borrar_symbol_suscrito", symbol, self.dataSuscrita)
+    async def borrar_symbol_suscrito(self, symbol):
+       # print("borrar_symbol_suscrito", symbol, self.dataSuscrita)
         try:
-            self.dataSuscrita.remove(symbol)
+            if symbol in self.dataSuscrita:
+                #quiero recorrer todas las keys de este simbolo para ver si tienen valores distintos de 0
+                #si todas tienen valores distintos de 0 la borro de resto no la borro
+                if len(self.dataSuscrita)==1:
+                        self.dataSuscrita = []
+                        print("paso suscripcion a 0")
+                        self.suscripcionCompleta = True
+                        print("espero 2 seg")
+                        await asyncio.sleep(2)
+                else:
+                    self.dataSuscrita.remove(symbol)
+                
+
+                """
+                contadorKeysNot0 = 0
+                print("entro a borrar el ultimo simbolo")
+                for key in self.prices[symbol]:
+                    if self.prices[symbol][key] != 0:
+                        contadorKeysNot0+=1
+                
+                if contadorKeysNot0 == 6:
+                """
+                    
+                print("saliendo de borrar el ultimo simbolo")
         except Exception as e:
             print("error borrando symbol: ", e)
-        if len(self.dataSuscrita) == 0:
-            self.changing_pairs = True
-            print("se borraron todos los simbolos")
 
-    def process_message(self, msg):
+
+    async def process_message(self, msg):
         try:
             jsonRes = json.loads(msg)
         #    print("jsonRes", jsonRes)
@@ -149,21 +172,28 @@ class HistoricoTV():
                         value = jsonRes["p"][1]["v"].get(key)
                         if value is not None:
                             self.prices[symbol][key] = value
-                    self.borrar_symbol_suscrito(symbol)
+                    if len(self.dataSuscrita)>0:
+                    #    print("es mayor a cero asi q mando a borrar")
+                        await self.borrar_symbol_suscrito(symbol)
+                    else:
+                       # print("ya mande a borrar todos asi que mando a enviar y paso suscripcion completa a true")
+                        if self.changing_pairs==False:
+                           # print("mando a enviar")
+                            self.server.send_message_not_await(self.client_id, json.dumps(jsonRes["p"][1]))
+                      
                    # print("precios",json.dumps(self.prices))
               #      self.server.broadcast(json.dumps(prices))
                 except KeyError:
                     print("Could not find key in message:")
-        except json.JSONDecodeError:
-            print(f"Failed to decode JSON message.")
-        except KeyError:
-            print(f"Key 'm' not found in price message.")
+        except Exception as e:
+            print(f"Failed to decode JSON message.", e)
+  
 
     async def esperar_symbols_parents(self):
         #hacer un while que espere 5 seg y que pase la variable self.changin_pairs a true luego de los 5 seg
         print("esperar_symbols_parents")
         await asyncio.sleep(10)
-        self.changing_pairs = True
+       # self.changing_pairs = True
         print("pasaron los 5 seg")
 
     async def get_symbols_parents_childs(self, pairs):
@@ -180,7 +210,6 @@ class HistoricoTV():
             while self.changing_pairs==False:
                 #   print("escuchando")
                 result = ws.recv()
-                #   print("result", result)
                 messages = result.split("~m~")
                 messages = [msg for msg in messages if msg]
                 for msg in messages:
@@ -188,9 +217,10 @@ class HistoricoTV():
                     if msg.startswith("{"):
                         # print("msg", msg)
                         #start_time = time.time()
-                        self.process_message(msg)
+                        await self.process_message(msg)
+                #   print("result", result)
                 await asyncio.sleep(0.1)
-            print("saliendo del ciclo infinito q escucha")
+          #  print("saliendo del ciclo infinito q escucha")
             ws.close()
         except Exception as e:
             ws.close()
@@ -301,3 +331,53 @@ class HistoricoTV():
             formatted_data.append(record)
         
         return formatted_data
+    
+    async def esperar_data_suscrita(self):
+        print("esperar_data_suscrita")
+        while True:
+            if self.suscripcionCompleta:
+                print("se borraron todos los simbolos")
+                break
+            await asyncio.sleep(0.01)
+        print("pasaron los 5 seg")
+        return self.prices
+    
+    def run(self):
+        """
+        Inicia el servidor WebSocket.
+        """
+        print("start cola")
+        loop = asyncio.new_event_loop()# creo un nuevo evento para asyncio y asi ejecutar todo de aqui en adelante con async await 
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self.run_forever())#ejecuto la funcion q quiero
+        loop.close()#cierro el evento
+    
+    async def run_forever(self):
+        print("entrando a run")
+        while self.closeThread==False:
+            try:
+                # Crear una conexión WebSocket segura utilizando la función create_connection
+                if self.changing_pairs==True:
+                    print("cambiando pairs pasando a false la variable")
+                    self.changing_pairs=False
+                ws = self.create_websocket_connection()
+                self.suscribir_data(ws)
+                # Recibir mensajes del servidor
+                try:
+                    while self.changing_pairs==False:
+                        result = ws.recv()
+                        messages = result.split("~m~")
+                        messages = [msg for msg in messages if msg]
+                        for msg in messages:
+                            if msg.startswith("{"):
+                                await self.process_message(msg)
+                    print("saliendo del ciclo infinito q escucha")
+                    ws.close()
+                except Exception as e:
+                    ws.close()
+                    print("error en el ciclo infinito q escucha")
+
+            except Exception as e:
+                print("Error: " + str(e))
+                print("Reconnecting in 5 seconds...")
+                await asyncio.sleep(5)

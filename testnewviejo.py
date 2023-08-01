@@ -5,16 +5,12 @@ import logging
 from socketServer import socketServer
 import json
 import ssl
-import re
 import string
 import requests
 import random
 from websocket import create_connection
 from websocket._exceptions import WebSocketConnectionClosedException
 
-
-
-tokenJWT = "eyJhbGciOiJSUzUxMiIsImtpZCI6IkdaeFUiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjo0MjA3Mjc0MCwiZXhwIjoxNjg5ODkyMzc1LCJpYXQiOjE2ODk4Nzc5NzUsInBsYW4iOiJwcm9fdHJpYWwiLCJleHRfaG91cnMiOjEsInBlcm0iOiJjYm90LGNib3RfbWluaSxjbWUsY21lLWZ1bGwsY21lX21pbmksY29tZXgsY29tZXhfbWluaSxueW1leCxueW1leF9taW5pIiwic3R1ZHlfcGVybSI6InR2LXZvbHVtZWJ5cHJpY2UsdHYtY2hhcnRwYXR0ZXJucyIsIm1heF9zdHVkaWVzIjo1LCJtYXhfZnVuZGFtZW50YWxzIjowLCJtYXhfY2hhcnRzIjoyLCJtYXhfYWN0aXZlX2FsZXJ0cyI6MjAsIm1heF9zdHVkeV9vbl9zdHVkeSI6MSwibWF4X2FjdGl2ZV9wcmltaXRpdmVfYWxlcnRzIjoyMCwibWF4X2FjdGl2ZV9jb21wbGV4X2FsZXJ0cyI6MjAsIm1heF9jb25uZWN0aW9ucyI6MTB9.rHPvRsImS0mJzg8XlbM8JFnRoimt_1Hv30QIH8nccLPWDB8u_kb7qBen0jBnIAXcFNV0gebHJkWaKooHih76ZPKCJg_SDHuRdQCirq9fHw2RGmrGZI8uxQ1WVRC9ayIAgKHbcsPuXZMaEguAJizjorqRz_f0zUjORoUiRSCHcw4"
 class TVSocket(Thread):
     def __init__(self, host, port):
         Thread.__init__(self)
@@ -128,12 +124,24 @@ class TVSocket(Thread):
     def sendMessage(self, ws, func, args):
         ws.send(self.createMessage(func, args))
 
-    def process_message(self, msg):
+    def process_message(self, msg, prices):
         try:
-         #   jsonRes = json.loads(msg)
-           # print(f"Mensaje recibido: {jsonRes}")
-            self.server.broadcast(json.dumps(msg))
-           
+            jsonRes = json.loads(msg)
+        #    print("jsonRes", jsonRes)
+            if jsonRes["m"] == "qsd":
+                try:
+                    symbol = jsonRes["p"][1]["n"]
+                    keys = ["lp", "bid", "ask", "ch", "chp", "volume"]
+                    if symbol not in prices:
+                        prices[symbol] = {}
+                    for key in keys:
+                        value = jsonRes["p"][1]["v"].get(key)
+                        if value is not None:
+                            prices[symbol][key] = value
+                  #  print("precios",json.dumps(prices))
+                    self.server.broadcast(json.dumps(prices))
+                except KeyError:
+                    print("Could not find key in message:")
         except json.JSONDecodeError:
             print(f"Failed to decode JSON message.")
         except KeyError:
@@ -160,7 +168,6 @@ class TVSocket(Thread):
     async def run_client_socket(self):
         print("entrando al run client socket")
         prices = {}  
-        tokenNuevo = "eyJhbGciOiJSUzUxMiIsImtpZCI6IkdaeFUiLCJ0eXAiOiJKV1QifQ.eyJ1c2VyX2lkIjo0MjA3Mjc0MCwiZXhwIjoxNjg5ODkyNDYwLCJpYXQiOjE2ODk4NzgwNjAsInBsYW4iOiJwcm9fdHJpYWwiLCJleHRfaG91cnMiOjEsInBlcm0iOiJjYm90LGNib3RfbWluaSxjbWUsY21lLWZ1bGwsY21lX21pbmksY29tZXgsY29tZXhfbWluaSxueW1leCxueW1leF9taW5pIiwic3R1ZHlfcGVybSI6InR2LWNoYXJ0cGF0dGVybnMsdHYtdm9sdW1lYnlwcmljZSIsIm1heF9zdHVkaWVzIjo1LCJtYXhfZnVuZGFtZW50YWxzIjowLCJtYXhfY2hhcnRzIjoyLCJtYXhfYWN0aXZlX2FsZXJ0cyI6MjAsIm1heF9zdHVkeV9vbl9zdHVkeSI6MSwibWF4X2FjdGl2ZV9wcmltaXRpdmVfYWxlcnRzIjoyMCwibWF4X2FjdGl2ZV9jb21wbGV4X2FsZXJ0cyI6MjAsIm1heF9jb25uZWN0aW9ucyI6MTB9.SuRfZT8p1JbaurZwSsnxrTD0vhlrBbpbizrq90n68aDxNOMQl_zXjAj5De52qWOuQOCYQMPJ6XYht7o9xLMFQ9QoGvHSARys9ENlNpJrV-TSBAt3WaasV6Cz0KGCVtWnm7cTfs1Pn--fIHRU_FZ8VWzRllQ_sVE6hbj-jP9cUaM"
         while True:
             try:
                 # Crear una conexión WebSocket segura utilizando la función create_connection
@@ -170,20 +177,19 @@ class TVSocket(Thread):
                 ws = self.create_websocket_connection()
                 self.suscribir_data(ws,self.pairs)
                 # Recibir mensajes del servidor
-
                 try:
                     while self.changing_pairs==False:
                      #   print("escuchando")
                         result = ws.recv()
-                       # print("result-------------------------------------------------------", result)
-                        try: 
-                            patron = re.compile(r'~m~\d+~m~({.*?})')
-                            # Buscar los objetos JSON en el texto
-                            objetos_json = re.findall(patron, result)
-                            self.process_message(objetos_json)
-                        except Exception as e:
-                            print("error con el patron ")
-                     
+                     #   print("result", result)
+                        messages = result.split("~m~")
+                        messages = [msg for msg in messages if msg]
+                        for msg in messages:
+                           # print("msg", msg)
+                            if msg.startswith("{"):
+                               # print("msg", msg)
+                                #start_time = time.time()
+                                self.process_message(msg, prices)
                     print("saliendo del ciclo infinito q escucha")
                     ws.close()
                     prices = {}

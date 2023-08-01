@@ -43,6 +43,25 @@ class UserController:
                 news += filtered_news
         return news
     
+    async def get_secciones_visor(id):
+        print("el user con id", id, "pide secciones")
+        try:
+            seccionesUser = mongo.db.users_visor_secciones.find({"id_user": id})
+            
+            results_list = list(seccionesUser)
+            print("results_list", results_list)
+            if seccionesUser:
+                print("si tiene secciones es te user ")
+                # Convertir el cursor en una lista y convertir los ObjectId a str
+                for x in range(len(results_list)):
+                    print("recorriendo el ciclo x")
+                    results_list[x]["_id"] = str(results_list[x]["_id"])
+            return jsonify(results_list)
+        except Exception as e:
+            print("error", e)
+            return jsonify([])
+
+    
     async def get_news():
         news = await UserController.get_news_request(); 
         return jsonify(news)
@@ -56,6 +75,15 @@ class UserController:
         pairs.append(symbol)
         his = HistoricoTV()
         result = await asyncio.create_task(his.get_data_for_symbol(pairs, limit))
+       # print("result result", result)
+        return jsonify(result)
+    
+    async def get_symbols_parents():
+        from app.clases.cla_historicotv import HistoricoTV
+        req_obj = request.get_json()
+        pairs = req_obj["pairs"]
+        his = HistoricoTV()
+        result = await asyncio.create_task(his.get_symbols_parents_childs(pairs))
        # print("result result", result)
         return jsonify(result)
     

@@ -1,15 +1,372 @@
-2023-07-03 13:11:04,352 werkzeug  INFO  [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000  224 
-2023-07-03 13:11:04,352 werkzeug  INFO  [33mPress CTRL+C to quit[0m  224 
-2023-07-03 13:13:13,110 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:13:13] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:13:13,114 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:13:13] "POST /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:16:16,540 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:16:16] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:16:16,544 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:16:16] "POST /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:16:44,303 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:16:44] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:16:44,308 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:16:44] "POST /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:17:20,200 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:17:20] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:17:20,204 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:17:20] "POST /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:17:29,294 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:17:29] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:17:29,298 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:17:29] "POST /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:18:36,318 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:18:36] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
-2023-07-03 13:18:36,322 werkzeug  INFO  127.0.0.1 - - [03/Jul/2023 13:18:36] "POST /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:33:25,515 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:33:25] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:33:25,518 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:33:25] "POST /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:33:25,625 websockets.server  INFO  connection open  648 
+2023-07-26 16:33:25,669 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:33:25] "OPTIONS /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:33:30,789 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:33:30] "POST /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:33:53,402 websockets.server  INFO  connection closed  264 
+2023-07-26 16:51:06,129 werkzeug  INFO  [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.101:5000  224 
+2023-07-26 16:51:06,129 werkzeug  INFO  [33mPress CTRL+C to quit[0m  224 
+2023-07-26 16:51:06,145 websockets.server  INFO  server listening on 127.0.0.1:5353  713 
+2023-07-26 16:51:12,521 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:12] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:51:12,524 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:12] "POST /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:51:12,692 websockets.server  INFO  connection open  648 
+2023-07-26 16:51:12,711 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:12] "OPTIONS /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:51:17,469 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:17] "POST /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:51:21,773 websockets.server  INFO  connection closed  264 
+2023-07-26 16:51:22,386 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-32' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:22,388 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-33' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:22,727 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-34' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:22,905 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-35' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:23,015 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-36' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:23,276 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-37' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:23,677 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-38' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:23,677 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-39' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:24,496 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-40' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:25,165 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-41' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:25,226 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-42' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:25,485 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-43' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:25,795 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-44' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:26,076 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-45' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:26,077 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:27,105 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-47' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:27,637 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-48' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:27,638 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-49' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:28,576 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-50' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:30,964 werkzeug  INFO  [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.101:5000  224 
+2023-07-26 16:51:30,965 werkzeug  INFO  [33mPress CTRL+C to quit[0m  224 
+2023-07-26 16:51:30,981 websockets.server  INFO  server listening on 127.0.0.1:5353  713 
+2023-07-26 16:51:34,560 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:34] "OPTIONS /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:51:34,564 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:34] "POST /api/checkToken HTTP/1.1" 200 -  224 
+2023-07-26 16:51:34,759 websockets.server  INFO  connection open  648 
+2023-07-26 16:51:34,777 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:34] "OPTIONS /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:51:39,394 werkzeug  INFO  127.0.0.1 - - [26/Jul/2023 16:51:39] "POST /api/get_symbols_parents HTTP/1.1" 200 -  224 
+2023-07-26 16:51:46,633 websockets.server  INFO  connection closed  264 
+2023-07-26 16:51:47,054 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-37' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:47,527 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-38' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:47,694 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-39' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:48,437 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-40' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:49,086 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-41' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:49,326 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-42' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:50,905 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-43' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:51,066 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-44' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:51,276 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-45' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:52,485 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:54,086 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-47' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:55,044 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-48' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:55,695 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-49' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:56,878 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-50' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:57,046 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-51' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:57,287 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:57,504 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-53' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:57,745 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-54' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:58,886 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-55' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:58,886 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-56' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:58,887 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-57' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:59,195 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-58' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:51:59,614 asyncio  ERROR  Task exception was never retrieved
+future: <Task finished name='Task-59' coro=<WebSocketCommonProtocol.send() done, defined at C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py:580> exception=ConnectionClosedOK(Close(code=1001, reason=''), Close(code=1001, reason=''), True)>  1744 
+Traceback (most recent call last):
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 635, in send
+    await self.ensure_open()
+  File "C:\Users\Hector\AppData\Local\Programs\Python\Python310\lib\site-packages\websockets\legacy\protocol.py", line 944, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+2023-07-26 16:52:14,457 werkzeug  INFO  [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.101:5000  224 
+2023-07-26 16:52:14,457 werkzeug  INFO  [33mPress CTRL+C to quit[0m  224 
+2023-07-26 16:52:14,471 websockets.server  INFO  server listening on 127.0.0.1:5353  713 
