@@ -28,8 +28,8 @@ class UserController:
         unset_jwt_cookies(response)
         return response, 200
     
-    async def get_news_request():
-        symbols_news = ['CBOT:ZS1!', 'CME:ES1!', 'NYMEX:CL1!']
+    async def get_news_request(pairs):
+        symbols_news = pairs
         news = []
         headers = {
         'Origin': 'https://www.tradingview.com', "Accept-Encoding": "gzip, deflate, br", 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
@@ -63,7 +63,9 @@ class UserController:
 
     
     async def get_news():
-        news = await UserController.get_news_request(); 
+        req_obj = request.get_json()
+        symbols = req_obj["symbols"]
+        news = await UserController.get_news_request(symbols); 
         return jsonify(news)
     
     async def historico_visor():

@@ -108,7 +108,7 @@ class clienteTV(Thread):
         self.sendMessage(ws, "set_auth_token", [auth_token])
         session = self.generateSession()
         self.sendMessage(ws, "quote_create_session", [session])
-        self.sendMessage(ws, "quote_set_fields", [session,  'ch', 'chp',  'exchange',  'lp',    'original_name',  'volume', 'ask', 'bid']) 
+        self.sendMessage(ws, "quote_set_fields", [session,  'ch', 'chp',  'exchange',  'lp',    'original_name',  'volume', 'ask', 'bid', 'root', 'description', 'expiration', 'listed_exchange', 'short_description']) 
         # For each pair, get all the symbols (including contracts) and add them to the session
         for i, pair in enumerate(self.pairs):
            # print("pair", pair)
@@ -165,7 +165,7 @@ class clienteTV(Thread):
             if jsonRes["m"] == "qsd":
                 try:
                     symbol = jsonRes["p"][1]["n"]
-                    keys = ["lp", "bid", "ask", "ch", "chp", "volume"]
+                    keys = ["lp", "bid", "ask", "ch", "chp", "volume", "description", "expiration", "listed_exchange", "root", "short_description"]
                     if symbol not in self.prices:
                         self.prices[symbol] = {}
                     for key in keys:
